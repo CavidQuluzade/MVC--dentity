@@ -1,0 +1,41 @@
+﻿@using İdentity.ViewModels.Account
+@model AccountLoginVM
+@{
+    Layout = "_Layout";
+    string returnUrl = Context.Request.Query["returnUrl"];
+}
+<form method="post" asp-action="login" asp-controller="Account" class="login100-form validate-form">
+    <span class="login100-form-logo">
+        <i class="zmdi zmdi-landscape"></i>
+    </span>
+
+    <span class="login100-form-title p-b-34 p-t-27">
+        Sign up
+    </span>
+    <input value="@returnUrl" asp-for="returnURL" type="hidden" />
+    <div asp-validation-summary="All"></div>
+    <div class="wrap-input100 validate-input">
+        <input asp-for="EmailAddress" class="input100" placeholder="Email">
+        <span asp-validation-for="EmailAddress"></span>
+    </div>
+
+    <div class="wrap-input100 validate-input">
+        <input asp-for="Password" class="input100" placeholder="Password">
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <div class="container-login100-form-btn">
+        <button class="login100-form-btn">
+            Log in
+        </button>
+    </div>
+
+    <div class="text-center p-t-90">
+        <a asp-action="register" asp-controller="account" class="txt1">
+            Don't have an account?
+        </a>
+        <a asp-action="forgotpassword" asp-controller="account" class="txt1">
+            Forgot your password?
+        </a>
+    </div>
+</form>

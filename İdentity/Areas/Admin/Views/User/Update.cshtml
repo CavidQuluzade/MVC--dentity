@@ -1,0 +1,36 @@
+﻿@using İdentity.Areas.Admin.Models.User
+@model UserUpdateVM
+
+<form enctype="multipart/form-data" method="post" asp-action="update" asp-controller="user" class="login100-form validate-form">
+    <div asp-validation-summary="All"></div>
+    <div class="wrap-input100 validate-input">
+        <input asp-for="EmailAddress" class="input100" placeholder="Email">
+        <span asp-validation-for="EmailAddress"></span>
+    </div>
+
+    <div class="wrap-input100 validate-input">
+        <input asp-for="Password" class="input100" placeholder="Password">
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div class="wrap-input100 validate-input">
+        <input asp-for="ConfirmPassword" class="input100" placeholder="Confirm Password">
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+    <div class="wrap-input100 validate-input">
+        <input asp-for="Country" class="input100" placeholder="Enter Country">
+        <span asp-validation-for="Country"></span>
+    </div>
+    <div class="wrap-input100 validate-input">
+        <input asp-for="City" class="input100" placeholder="Enter City">
+        <span asp-validation-for="City"></span>
+    </div>
+    <div class="wrap-input100 validate-input">
+        <input asp-for="PhoneNumber" class="input100" placeholder="Enter Phonenumber">
+        <span asp-validation-for="PhoneNumber"></span>
+    </div>
+    <div class="wrap-input100 validate-input">
+        <select asp-for="RoleIds" asp-items="@Model.Roles" multiple></select>
+        <span asp-validation-for="RoleIds"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>

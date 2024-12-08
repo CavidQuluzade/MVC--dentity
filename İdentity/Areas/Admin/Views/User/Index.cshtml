@@ -1,0 +1,44 @@
+﻿@using İdentity.Areas.Admin.Models.User
+@model UserIndexVM
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Products</h1>
+    <a class="btn btn-success" asp-action="create" asp-controller="user">Create</a>
+</div>
+
+<table class="table table-light">
+    <thead>
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Country</th>
+            <th scope="col">City</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Roles</th>
+            <th scope="col" class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.Country</td>
+                    <td>@user.City</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>
+                        @foreach(var role in user.Roles){
+                            <p>@role</p>
+                        }
+                    </td>
+                    <td class="text-center d-flex justify-content-center">
+                        <a class="btn btn-primary mx-2" asp-action="update" asp-controller="user" asp-route-id="@user.Id">Update</a>
+                        <form method="post" asp-action="delete" asp-controller="user" asp-route-id="@user.Id">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <a class="btn btn-primary mx-2" asp-action="details" asp-controller="user" asp-route-id="@user.Id">Detail</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

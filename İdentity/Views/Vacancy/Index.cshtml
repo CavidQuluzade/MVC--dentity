@@ -1,0 +1,9 @@
+﻿@{
+    Layout = null;
+}
+You in page for HR
+@if (User.Identity.IsAuthenticated)
+{
+    <span>@User.Identity.Name</span>
+    <a asp-action="logout" asp-controller="account"></a>
+}
