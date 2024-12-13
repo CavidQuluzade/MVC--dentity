@@ -3,6 +3,7 @@ using İdentity.Utilities.EmailHandler.Abstract;
 using İdentity.Utilities.EmailHandler.Concrete;
 using İdentity.Utilities.EmailHandler.Models;
 using İdentity.ViewModels.Account;
+using İdentity.ViewModels.Subscription;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,7 +54,7 @@ namespace İdentity.Controllers
 
             var token = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;
             var url = Url.Action(nameof(ConfirmEmail), "Account", new {token, user.Email}, Request.Scheme);
-            _emailService.SendEmail(new Message(new List<string> { user.Email }, "Email COnfirmation", url));
+            _emailService.SendEmail(new Utilities.EmailHandler.Models.Message(new List<string> { user.Email }, "Email COnfirmation", url));
             return RedirectToAction(nameof(Login));
         }
         
@@ -104,6 +105,7 @@ namespace İdentity.Controllers
         {
             return View();
         }
+        
         [HttpPost]
         public IActionResult ForgotPassword(AccountForgotPasswordVM model)
         {
@@ -117,7 +119,7 @@ namespace İdentity.Controllers
 
             var token = _userManager.GeneratePasswordResetTokenAsync(user).Result;
             var url = Url.Action(nameof(ResetPassword), "Account", new { token, user.Email }, Request.Scheme);
-            _emailService.SendEmail(new Message(new List<string> { user.Email}, "Forgot Password?", url));
+            _emailService.SendEmail(new Utilities.EmailHandler.Models.Message(new List<string> { user.Email}, "Forgot Password?", url));
 
             ViewBag.NotificationText = "Mail has been send. Check your email box";
             return View("Notification");
@@ -150,6 +152,28 @@ namespace İdentity.Controllers
             }
             return RedirectToAction(nameof(Login));
         }
+
+        [HttpPost]
+        public IActionResult Subscribe(SubscribeVM model)
+        {
+            if (!ModelState.IsValid) return RedirectToAction("Index", "Home");
+            var result = _userManager.FindByEmailAsync(model.EmailAddress).Result;
+            if (result == null)
+            {
+                ModelState.AddModelError("EmailAdress", "Email must be registered");
+                return RedirectToAction("Index", "Home");
+            }
+            result.isSubscribed = true;
+            var isUpdated = _userManager.UpdateAsync(result).Result;
+            if (!isUpdated.Succeeded)
+            {
+                ModelState.AddModelError("EmailAdress", "Error occured. TRy again");
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
         public async Task<ActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

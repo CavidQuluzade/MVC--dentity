@@ -1,8 +1,18 @@
-﻿@{
+﻿@using İdentity.ViewModels.Subscription
+@model SubscribeVM
+@{
     Layout = null;
 }
 You at home page
 @if(User.Identity.IsAuthenticated){
     <span>@User.Identity.Name</span>
     <a asp-action="logout" asp-controller="account"></a>
+
+    <form method="post" asp-action="Subscribe" asp-controller="Account">
+        <div asp-validation-summary="All"></div>
+        <div class="wrap-input100 validate-input">
+            <input asp-for="EmailAddress" class="input100" placeholder="Email">
+            <span asp-validation-for="EmailAddress"></span>
+        </div>
+    <button>Subscribe</button></form>
 }

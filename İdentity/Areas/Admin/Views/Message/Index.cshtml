@@ -1,0 +1,30 @@
+﻿@using İdentity.Areas.Admin.Models.Message
+@model MessageIndexVM
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Messages</h1>
+    <a class="btn btn-success" asp-action="send" asp-controller="message">Create</a>
+</div>
+
+<table class="table table-light">
+    <thead>
+        <tr>
+            <th scope="col">Tittle</th>
+            <th scope="col">Description</th>
+            <th scope="col">Created at</th>
+            <th scope="col">Modified at</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var message in Model.Messages)
+        {
+            <tr>
+                <td>@message.Tittle</td>
+                <td>@message.Description</td>
+                <td>@message.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@message.UpdatedAt?.ToString("dd/MM/yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>

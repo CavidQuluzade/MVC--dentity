@@ -6,5 +6,6 @@ namespace İdentity.Data.Entities
     {
         public string City { get; set; }
         public string Country { get; set; }
+        public bool isSubscribed { get; set; }
     }
 }
